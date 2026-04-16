@@ -21,7 +21,7 @@ def SignUp_Menu():
 
 def authorize(ad_user,ad_pass):
     if ad_user == "admin@123" and ad_pass == "admin123#":
-        print("\nVerification Sucessful. Proceeding to Sign Up menu for admin")
+        return True
         wait_and_clear(seconds=1.5)
 
 def user_exists(user):
@@ -50,6 +50,17 @@ def SignUp(user,password,re_pass,role):
     except:
         return "Error during signup."
 
+def collect_signup_data(role):
+    print(f"\n===== {role.upper()} SIGNUP =====\n")
+
+    user = input("Enter username: ")
+    password = input("Enter password: ")
+    re_pass = input("Re-enter password: ")
+
+    message = SignUp(user, password, re_pass, role)
+    print(f"\n{message}")
+
+
 def LogIn_Menu():
     print("======= LogIn Menu =======\n")
 
@@ -67,14 +78,19 @@ while True:
             print("======= Authorization Required =======\n")
             auth_user = input("Enter username : ")
             auth_pass = input("Enter password : ")
-            authorize(auth_user, auth_pass)
-        elif ch == 2:
-            user =     input("Enter a username     : ")
-            password = input("Enter a new password : ")
-            re_pass =  input("Re-enter the password:")
-            role = 'Student'
-            message1 = SignUp(user,password,re_pass,role)
-            print(f"\n{message1}")
+            res = authorize(auth_user, auth_pass)
+
+            if res == True:
+                print("\nVerification Sucessful. Proceeding to Sign Up menu for admin")
+                wait_and_clear(seconds=1)
+            else:
+                print("\nIncorrect credentials")
+                break
+            collect_signup_data("Admin")
+            wait_and_clear(seconds=1.5)
+
+        elif role_ch == 2:
+            collect_signup_data("Student")
             wait_and_clear(seconds=1.5)
     elif ch == 2:
         LogIn_Menu()
