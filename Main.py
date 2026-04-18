@@ -596,7 +596,6 @@ def admin_menu(admin_obj):
         print("7. View Top 3 Students")
         print("8. Search student")
         print("9. Log Out")
-        print(" >")
         
         ch = input("\nSelect an option: ")
         if ch == '1':
