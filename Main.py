@@ -55,37 +55,6 @@ def user_exists(username):
     except:
         return False
 
-
-
-def search_student(self):
-        """Feature: Search for a student by ID or Name."""
-        print("\n" + "="*45)
-        print("🔍 SEARCH STUDENT RECORDS")
-        print("="*45)
-        query = input("Enter Student ID or Full Name to search: ").strip().lower()
-
-        try:
-            df = pd.read_csv(FILES['users'])
-            # Search in both user_id and name columns (case-insensitive)
-            results = df[
-                (df['user_id'].str.lower().str.contains(query)) | 
-                (df['name'].str.lower().str.contains(query))
-            ]
-
-            if not results.empty:
-                print(f"\nFound {len(results)} matching record(s):")
-                for _, row in results.iterrows():
-                    print("-" * 30)
-                    print(f"ID       : {row['user_id']}")
-                    print(f"Name     : {row['name']}")
-                    print(f"Username : {row['username']}")
-                    print(f"Role     : {row['role']}")
-                    print(f"Age      : {row['age']}")
-            else:
-                print(f"\n[!] No records found matching '{query}'.")
-        except Exception as e:
-            print(f"Search Error: {e}")
-
 class User:
     def __init__(self, user_id, username, role, name):
         self.user_id = user_id
@@ -136,7 +105,35 @@ class Student(User):
             print("[✓] Name updated successfully.")
         except Exception as e:
             print(f"Error updating name: {e}")
+def search_student(self):
+        """Feature: Search for a student by ID or Name."""
+        print("\n" + "="*45)
+        print("🔍 SEARCH STUDENT RECORDS")
+        print("="*45)
+        query = input("Enter Student ID or Full Name to search: ").strip().lower()
 
+        try:
+            df = pd.read_csv(FILES['users'])
+            # Search in both user_id and name columns (case-insensitive)
+            results = df[
+                (df['user_id'].str.lower().str.contains(query)) | 
+                (df['name'].str.lower().str.contains(query))
+            ]
+
+            if not results.empty:
+                print(f"\nFound {len(results)} matching record(s):")
+                for _, row in results.iterrows():
+                    print("-" * 30)
+                    print(f"ID       : {row['user_id']}")
+                    print(f"Name     : {row['name']}")
+                    print(f"Username : {row['username']}")
+                    print(f"Role     : {row['role']}")
+                    print(f"Age      : {row['age']}")
+            else:
+                print(f"\n[!] No records found matching '{query}'.")
+        except Exception as e:
+            print(f"Search Error: {e}")
+            
     def performance_dashboard(self):
         try:
             print("\n" + "="*45)
