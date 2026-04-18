@@ -1,4 +1,9 @@
 user_id,activity,hours
 ID002,Debate Club,10
 ID003,Pokemon Club,10
-ID004,Chess Club,13
+ID004,Chess Club,15
+ID005,Photography,12
+ID006,Football,20
+ID007,Drama Society,8
+ID008,Coding Club,25
+ID009,Music Band,14
