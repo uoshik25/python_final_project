@@ -1,0 +1,4 @@
+user_id,activity,hours
+ID002,Debate Club,10
+ID003,Pokemon Club,10
+ID003,Chess Club,13

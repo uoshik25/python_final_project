@@ -1,0 +1,4 @@
+user_id,username,role,name,age
+AD001,admin1,admin,Admin Alice,30
+ID002,student1,student,Alish Adhikari,20
+ID003,Oshik Upreti,student,Oshik Upreti,17

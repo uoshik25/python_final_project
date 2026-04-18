@@ -1,0 +1,3 @@
+user_id,math,science,english,history,art
+ID002,90,92,95,99,97
+ID003,60,68,61,63,72
