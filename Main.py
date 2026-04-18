@@ -105,7 +105,7 @@ class Student(User):
             print("[✓] Name updated successfully.")
         except Exception as e:
             print(f"Error updating name: {e}")
-def search_student(self):
+    def search_student(self):
         """Feature: Search for a student by ID or Name."""
         print("\n" + "="*45)
         print("🔍 SEARCH STUDENT RECORDS")
