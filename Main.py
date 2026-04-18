@@ -185,16 +185,16 @@ class Student(User):
                 # Header Styling
                 pdf.set_font("Arial", 'B', 22)
                 pdf.set_text_color(44, 62, 80) # Dark Blue
-                pdf.cell(200, 15, "STUDENT PROGRESS REPORT", ln=True, align='C')
+                pdf.cell(200, 15, "STUDENT PROGRESS REPORT", ln=1, align='C')
                 pdf.ln(5)
                 
                 # Profile Section
                 pdf.set_font("Arial", 'B', 12)
                 pdf.set_text_color(0, 0, 0)
-                pdf.cell(100, 10, f"Name: {self.name}", ln=False)
-                pdf.cell(100, 10, f"Student ID: {self.user_id}", ln=True)
-                pdf.cell(100, 10, f"Age: {student.iloc[0]['age']}", ln=False)
-                pdf.cell(100, 10, f"Status: Active", ln=True)
+                pdf.cell(100, 10, f"Name: {self.name}", ln=0)
+                pdf.cell(100, 10, f"Student ID: {self.user_id}", ln=1)
+                pdf.cell(100, 10, f"Age: {student.iloc[0]['age']}", ln=0)
+                pdf.cell(100, 10, f"Status: Active", ln=1)
                 pdf.ln(10)
 
                 # Grades Table
@@ -223,13 +223,13 @@ class Student(User):
 
                 # ECA Section
                 pdf.set_font("Arial", 'B', 14)
-                pdf.cell(200, 10, "Extracurricular Achievements", ln=True)
+                pdf.cell(200, 10, "Extracurricular Achievements", ln=1)
                 pdf.set_font("Arial", '', 12)
                 if not eca.empty:
                     for _, row in eca.iterrows():
-                        pdf.cell(200, 10, f"• {row['activity']} - {row['hours']} Hours Participated", ln=True)
+                        pdf.cell(200, 10, f"  {row['activity']} - {row['hours']} Hours Participated", ln=1)
                 else:
-                    pdf.cell(200, 10, "No activities registered.", ln=True)
+                    pdf.cell(200, 10, "No activities registered.", ln=1)
 
                 # 3. Output
                 filename = f"MyReport_{self.user_id}.pdf"
