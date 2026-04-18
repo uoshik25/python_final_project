@@ -2,7 +2,10 @@ import time
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+from fpdf import FPDF
 
+pdf = FPDF()
+pdf.add_page()
 
 FILES = {
     'users': 'users.txt',
