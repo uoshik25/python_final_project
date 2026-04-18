@@ -2,6 +2,7 @@ import time
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import fpdf as FPDF
 
 
 FILES = {
