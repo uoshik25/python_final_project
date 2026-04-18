@@ -154,7 +154,86 @@ class Student(User):
 
         except Exception as e:
             print(f"Dashboard Error: {e}")
+def download_report_card(self):
+        """Feature: Allows the student to generate and download their own PDF report card."""
+        print("\n" + "="*45)
+        print("📄 GENERATING YOUR OFFICIAL REPORT CARD")
+        print("="*45)
+        
+        try:
+            # 1. Fetch Data using self.user_id
+            df_u = pd.read_csv(FILES['users'])
+            df_g = pd.read_csv(FILES['grades'])
+            df_e = pd.read_csv(FILES['eca'])
 
+            student = df_u[df_u['user_id'] == self.user_id]
+            grades = df_g[df_g['user_id'] == self.user_id]
+            eca = df_e[df_e['user_id'] == self.user_id]
+
+            if grades.empty:
+                print("[!] No grade records found to generate a report.")
+                return
+
+            # 2. PDF Setup
+            pdf = FPDF()
+            pdf.add_page()
+            
+            # Header Styling
+            pdf.set_font("Arial", 'B', 22)
+            pdf.set_text_color(44, 62, 80) # Dark Blue
+            pdf.cell(200, 15, "STUDENT PROGRESS REPORT", ln=True, align='C')
+            pdf.ln(5)
+            
+            # Profile Section
+            pdf.set_font("Arial", 'B', 12)
+            pdf.set_text_color(0, 0, 0)
+            pdf.cell(100, 10, f"Name: {self.name}", ln=False)
+            pdf.cell(100, 10, f"Student ID: {self.user_id}", ln=True)
+            pdf.cell(100, 10, f"Age: {student.iloc[0]['age']}", ln=False)
+            pdf.cell(100, 10, f"Status: Active", ln=True)
+            pdf.ln(10)
+
+            # Grades Table
+            pdf.set_fill_color(52, 152, 219) # Professional Blue
+            pdf.set_text_color(255, 255, 255) # White text
+            pdf.cell(95, 10, "Subject", 1, 0, 'C', True)
+            pdf.cell(95, 10, "Score", 1, 1, 'C', True)
+            
+            pdf.set_text_color(0, 0, 0)
+            pdf.set_font("Arial", '', 12)
+            subjects = df_g.columns[1:]
+            total = 0
+            for sub in subjects:
+                val = grades.iloc[0][sub]
+                pdf.cell(95, 10, sub.capitalize(), 1)
+                pdf.cell(95, 10, str(val), 1, 1, 'C')
+                total += val
+            
+            # Summary Calculation
+            avg = total / len(subjects)
+            pdf.set_font("Arial", 'B', 12)
+            pdf.set_fill_color(236, 240, 241) # Light Grey
+            pdf.cell(95, 10, "OVERALL PERCENTAGE", 1, 0, 'L', True)
+            pdf.cell(95, 10, f"{avg:.2f}%", 1, 1, 'C', True)
+            pdf.ln(10)
+
+            # ECA Section
+            pdf.set_font("Arial", 'B', 14)
+            pdf.cell(200, 10, "Extracurricular Achievements", ln=True)
+            pdf.set_font("Arial", '', 12)
+            if not eca.empty:
+                for _, row in eca.iterrows():
+                    pdf.cell(200, 10, f"• {row['activity']} - {row['hours']} Hours Participated", ln=True)
+            else:
+                pdf.cell(200, 10, "No activities registered.", ln=True)
+
+            # 3. Output
+            filename = f"MyReport_{self.user_id}.pdf"
+            pdf.output(filename)
+            print(f"\n[✓] Success! Your report has been saved as: {filename}")
+
+        except Exception as e:
+            print(f"Error creating report: {e}")
 class Admin(User):
     def __init__(self, user_id, username, role, name):
         super().__init__(user_id, username, role, name)
