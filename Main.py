@@ -511,11 +511,11 @@ class Admin(User):
 
             # 2. Collect Grades
             print("\n--- Enter Academic Grades ---")
-            math = input("Math Score: ")
-            science = input("Science Score: ")
-            english = input("English Score: ")
-            history = input("History Score: ")
-            art = input("Art Score: ")
+            math = float(input("Math Score: "))
+            science = float(input("Science Score: "))
+            english = float(input("English Score: "))
+            history = float(input("History Score: "))
+            art = float(input("Art Score: "))
             
             with open(FILES['grades'], "a") as f:
                 f.write(f"{new_id},{math},{science},{english},{history},{art}\n")
