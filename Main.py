@@ -263,7 +263,7 @@ class Admin(User):
         for i, (_, row) in enumerate(top.iterrows()):
             print(f"{medals[i]} {row['name']} {row['user_id']} → Average: {row['avg']:.2f}")
     
-  def search_student(self):
+    def search_student(self):
         """Feature: Search for a student by ID or Name."""
         print("\n" + "="*45)
         print("🔍 SEARCH STUDENT RECORDS")
@@ -594,7 +594,9 @@ def admin_menu(admin_obj):
         print("5. Add Student Record")
         print("6. View student-wise performance")
         print("7. View Top 3 Students")
-        print("8. Log Out")
+        print("8. Search student")
+        print("9. Log Out")
+        print(" >")
         
         ch = input("\nSelect an option: ")
         if ch == '1':
@@ -638,6 +640,9 @@ def admin_menu(admin_obj):
             admin_obj.top_3_students()
             input("\nPress Enter to return...")
         elif ch== '8':
+            admin_obj.search_student()
+            input("\nPress Enter to return...")
+        elif ch == '9':
             break
 
 def student_menu(student_obj):
