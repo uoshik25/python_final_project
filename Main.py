@@ -408,71 +408,62 @@ class Admin(User):
             print(f"Dashboard Error: {e}")
 
     def modify_student(self):
-        """Update student name OR grades with input validation."""
-        target_id = input("Enter Student ID to modify (e.g., ID002): ").strip()
+        """Update student name OR grades."""
+        target_id = input("Enter Student ID to modify (e.g., ID002): ")
 
         try:
             df_users = pd.read_csv(FILES['users'])
             df_grades = pd.read_csv(FILES['grades'])
 
-        # Check if student exists in the system
             if target_id not in df_users['user_id'].astype(str).values:
-                print(f"[!] Student ID {target_id} not found in user records.")
+                print("[!] Student ID not found.")
                 return
 
             print("\nWhat do you want to modify?")
             print("1. Name")
             print("2. Grades")
+
             choice = input("Select option: ")
 
-        # ======================
-        # 1. MODIFY NAME
-        # ======================
+            # ======================
+            # 1. MODIFY NAME
+            # ======================
             if choice == '1':
-                new_name = input("Enter new name: ").strip()
-                if new_name:
-                    df_users.loc[df_users['user_id'].astype(str) == target_id, 'name'] = new_name
-                    df_users.to_csv(FILES['users'], index=False)
-                    print("[✓] Name updated successfully.")
-                else:
-                    print("[!] Name cannot be empty.")
+                new_name = input("Enter new name: ")
+                df_users.loc[df_users['user_id'].astype(str) == target_id, 'name'] = new_name
+                df_users.to_csv(FILES['users'], index=False)
+                print("[✓] Name updated successfully.")
 
-        # ======================
-        # 2. MODIFY GRADES
-        # ======================
+            # ======================
+            # 2. MODIFY GRADES
+            # ======================
             elif choice == '2':
-                if target_id not in df_grades['user_id'].astype(str).values:
-                    print("[!] No existing grade record found for this ID.")
-                    return
+                print("\nEnter new marks:")
 
-                print("\nEnter new marks (0.0 - 100.0):")
                 try:
                     subjects = ['math', 'science', 'english', 'history', 'art']
-                    new_marks_list = []
-                
-                    for subject in subjects:
-                        val = float(input(f"{subject.capitalize()}: "))
-                        if 0 <= val <= 100:
-                            new_marks_list.append(val) # Keep as float
-                    else:
-                        print(f"[!] Invalid range for {subject}. Update cancelled.")
-                        return
 
-                # Apply updates as floats
-                    df_grades.loc[df_grades['user_id'].astype(str) == target_id, subjects] = new_marks_list
-                
-                # Save to CSV (Pandas will handle the float decimal points automatically)
+                    # take input as float (so decimals like 44.5 work)
+                    marks = [float(input(f"{sub.capitalize()}: ")) for sub in subjects]
+
+                    # ensure columns accept float
+                    df_grades[subjects] = df_grades[subjects].astype(float)
+
+                    # update directly (no validation)
+                    df_grades.loc[
+                        df_grades['user_id'].astype(str) == target_id,
+                        subjects
+                    ] = marks
+
                     df_grades.to_csv(FILES['grades'], index=False)
+
                     print("[✓] Grades updated successfully.")
 
                 except ValueError:
-                    print("[!] Error: Please enter valid numeric values (e.g., 85.5).")
-
-            else:
-                print("[!] Invalid choice.")
+                    print("[!] Invalid input. Enter numbers only.")
 
         except Exception as e:
-            print(f"Error modifying record: {e}")
+            print(f"Error modifying file: {e}")
 
     def delete_record(self):
 
