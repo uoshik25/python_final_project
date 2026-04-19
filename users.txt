@@ -1,10 +1,9 @@
 user_id,username,role,name,age
 ID001,admin1,admin,Admin Alice,30
-ID002,student1,student,pork,20
+ID002,student1,student,Andrew,20
 ID003,oshik_u,student,Oshik Upreti,17
 ID004,jdoe_99,student,John Doe,18
 ID005,jane_s,student,Jane Smith,19
 ID006,m_brown,student,William,18
 ID007,emily_w,student,Emily White,17
-ID008,d_wilson,student,David Wilson,20
 ID009,s_clark,student,Sarah Clark,19
